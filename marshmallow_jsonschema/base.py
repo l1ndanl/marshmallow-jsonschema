@@ -235,6 +235,9 @@ class JSONSchema(Schema):
     @post_dump(pass_many=False)
     def wrap(self, data):
         """Wrap this with the root schema definitions."""
+        if not data['required']:
+            del data['required']
+
         if self.nested:  # no need to wrap, will be in outer defs
             return data
 

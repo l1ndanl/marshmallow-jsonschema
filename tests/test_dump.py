@@ -440,3 +440,25 @@ def test_metadata_direct_from_field():
         'type': 'string',
         'description': 'Directly on the field!',
     }
+
+
+def test_required_field():
+    class TestSchema(Schema):
+        id = fields.Integer(required=True)
+        readonly_fld = fields.String(dump_only=True)
+
+    schema = TestSchema()
+    json_schema = JSONSchema()
+    dumped = json_schema.dump(schema).data
+    assert 'required' in dumped['definitions']['TestSchema']
+
+
+def test_no_required_fields():
+    class TestSchema(Schema):
+        id = fields.Integer()
+        readonly_fld = fields.String(dump_only=True)
+
+    schema = TestSchema()
+    json_schema = JSONSchema()
+    dumped = json_schema.dump(schema).data
+    assert 'required' not in dumped['definitions']['TestSchema']
