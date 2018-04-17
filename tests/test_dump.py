@@ -421,7 +421,7 @@ def test_readonly():
     ] == {
         'title': 'readonly_fld',
         'type': 'string',
-        'readonly': True,
+        'readOnly': True,
     }
 
 def test_metadata_direct_from_field():
