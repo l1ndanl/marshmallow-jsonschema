@@ -371,13 +371,14 @@ def test_readonly():
         readonly_fld = fields.String(dump_only=True)
 
     schema = TestSchema()
-
-    dumped = validate_and_dump(schema)
-
-    assert dumped["definitions"]["TestSchema"]["properties"]["readonly_fld"] == {
-        "title": "readonly_fld",
-        "type": "string",
-        "readonly": True,
+    json_schema = JSONSchema()
+    dumped = json_schema.dump(schema).data
+    assert dumped['definitions']['TestSchema']['properties'][
+        'readonly_fld'
+    ] == {
+        'title': 'readonly_fld',
+        'type': 'string',
+        'readOnly': True,
     }
 
 
