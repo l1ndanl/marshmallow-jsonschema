@@ -452,3 +452,18 @@ def test_required_excluded_when_empty():
     dumped = validate_and_dump(schema)
 
     assert "required" not in dumped["definitions"]["TestSchema"]
+
+
+def test_required_fields_partial():
+    class TestSchema(Schema):
+        id = fields.Integer(required=True)
+        readonly_fld = fields.String(dump_only=True)
+
+        def __init__(self, *args, **kwargs):
+            kwargs['partial'] = kwargs.get('partial', True)
+            super().__init__(*args, **kwargs)
+
+    schema = TestSchema()
+    json_schema = JSONSchema()
+    dumped = json_schema.dump(schema).data
+    assert 'required' not in dumped['definitions']['TestSchema']
