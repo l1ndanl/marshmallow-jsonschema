@@ -119,7 +119,7 @@ class JSONSchema(Schema):
         required = []
 
         for field_name, field in sorted(obj.fields.items()):
-            if field.required:
+            if not obj.partial and field.required:
                 required.append(field.name)
 
         return required
