@@ -11,6 +11,9 @@ REQUIREMENTS_TOX = requirements-tox.txt
 
 SHELL := /bin/bash -euo pipefail
 
+installcheck:
+	pip install -U .[reco]
+	pip install "pytest>=3" strict-rfc3339 jsonschema coveralls coverage
 venv_init:
 	pip install virtualenv
 	if [ ! -d $(VIRTUAL_ENV) ]; then \
